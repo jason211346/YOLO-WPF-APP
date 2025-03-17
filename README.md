@@ -2,14 +2,14 @@
 
 ![image](https://github.com/user-attachments/assets/d42970fa-b1cf-4b97-a5d0-3d89744a2ec8)
 
-這是一個基於WPF開發的物件偵測應用程式，使用YOLOv11模型進行即時物件偵測。應用程式提供了直覺的使用者介面，可以輕鬆地對圖片進行物件偵測並查看結果。
+此專案是基於[YOLOv11-WPF-Windows-Application](https://github.com/e96031413/YOLOv11-WPF-Windows-Application.git)的修改版本
+主要目的是希望進行瑕疵偵測, 因此新增了物件統計分析功能
 
 ## 功能特點
 
 - 📷 支援多種圖片格式（JPG、PNG、BMP）
-- 🔍 使用YOLOv11進行高精度物件偵測
 - 🔄 支援多種YOLO模型選擇
-- 📊 即時顯示偵測結果和信心度
+- 📊 即時顯示偵測結果(包含物件, 座標, 面積, 信心度)
 - 💾 可匯出偵測結果
 - 📁 支援批次處理多張圖片
 - 📈 物件統計分析功能
@@ -19,12 +19,6 @@
 - Windows 10 或更新版本
 - .NET 9.0 或更新版本
 - 建議：具備GPU加速功能的顯示卡
-
-## 安裝步驟
-
-1. 下載最新版本的[應用程式](https://github.com/e96031413/YOLOv11-WPF-Windows-Application/releases/download/v1.0.0/YOLOv11-WPF-App.zip)
-2. 解壓縮檔案到指定目錄
-3. 執行 `ObjectDetectionApp.exe`
 
 ## 使用方法
 
@@ -45,7 +39,7 @@
 ## 技術架構
 
 - 框架：WPF (.NET 9.0)
-- 物件偵測：YOLOv11n
+- 物件偵測：YOLOv8/yolov11
 - 影像處理：OpenCV Sharp
 - UI元件：原生WPF控制項
 
@@ -108,8 +102,5 @@ A: 將ONNX格式的模型檔案複製到應用程式下的Models目錄，重新�
 
 ## 更新日誌
 
-### v1.0.0 (2024-11-16)
-- 初始版本發布
-- 支援基本物件偵測功能
-- 批次處理功能
-- 結果匯出功能
+### v1.0.0 (2025-03-17)
+- 新增物件統計分析功能

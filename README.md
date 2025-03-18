@@ -1,9 +1,9 @@
-# YOLOv11-WPF-Windows-Application
+# YOLOv11-WPF-App
 
-![image](https://github.com/user-attachments/assets/d42970fa-b1cf-4b97-a5d0-3d89744a2ec8)
+![image](example/example.png)
 
 此專案是基於[YOLOv11-WPF-Windows-Application](https://github.com/e96031413/YOLOv11-WPF-Windows-Application.git)的修改版本
-主要目的是希望進行瑕疵偵測, 因此新增了物件統計分析功能
+主要目的是希望進行瑕疵偵測, 因此新增了物件統計分析功能, 且為方便使用此版本支持拖曳圖片上傳功能
 
 ## 功能特點
 
@@ -24,7 +24,7 @@
 
 1. 啟動應用程式
 2. 從下拉選單中選擇要使用的YOLO模型
-3. 點擊「選擇圖片」按鈕選擇要偵測的圖片
+3. 點擊「選擇圖片」或拖曳圖片到應用程式窗口，以選擇要偵測的圖片
 4. 點擊「開始偵測」進行物件偵測
 5. 在右側面板查看偵測結果
 6. 可選擇「儲存結果」將結果匯出
@@ -74,7 +74,6 @@ dotnet build
 
 ## 注意事項
 
-- 首次執行時需要下載YOLO模型檔案
 - 需要將ONNX格式的YOLO模型檔案放置於Models目錄中
 - 確保系統有足夠的記憶體空間
 - 建議使用GPU進行加速
@@ -102,5 +101,6 @@ A: 將ONNX格式的模型檔案複製到應用程式下的Models目錄，重新�
 
 ## 更新日誌
 
-### v1.0.0 (2025-03-17)
+### v1.2.0 (2025-03-18)
 - 新增物件統計分析功能
+- 新增拖曳圖片上傳功能

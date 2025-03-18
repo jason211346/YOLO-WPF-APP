@@ -106,6 +106,10 @@ namespace ObjectDetectionApp
             cboModels.SelectionChanged += CboModels_SelectionChanged;
             
             LoadAvailableModels();
+
+            this.AllowDrop = true;
+            this.DragOver += Window_DragOver;
+            this.Drop += Window_Drop;
         }
 
         private void LoadAvailableModels()
@@ -465,30 +469,32 @@ namespace ObjectDetectionApp
                     
                     // 保存當前顯示的圖片
                     var imageSource = imgMain.Source as BitmapSource;
-                    if (imageSource != null)
+                    if (imageSource == null)
                     {
-                        // 在 UI 執行緒中創建一個凍結的 BitmapSource
-                        BitmapSource frozenBitmap = null;
-                        
-                        // 如果圖片還沒有被凍結，創建一個凍結的副本
-                        if (!imageSource.IsFrozen && imageSource.CanFreeze)
-                        {
-                            frozenBitmap = imageSource.Clone();
-                            frozenBitmap.Freeze();
-                        }
-                        else
-                        {
-                            frozenBitmap = imageSource;
-                        }
-                        
-                        await Task.Run(() =>
-                        {
-                            using var fileStream = new FileStream(imagePath, FileMode.Create);
-                            var encoder = new PngBitmapEncoder();
-                            encoder.Frames.Add(BitmapFrame.Create(frozenBitmap));
-                            encoder.Save(fileStream);
-                        });
+                        // 處理圖片為 null 的情況，例如顯示提示或記錄錯誤
+                        return;
                     }
+                    
+                    // 如果圖片還沒有被凍結，創建一個凍結的副本
+                    BitmapSource frozenBitmap = null;
+                    
+                    if (!imageSource.IsFrozen && imageSource.CanFreeze)
+                    {
+                        frozenBitmap = imageSource.Clone();
+                        frozenBitmap.Freeze();
+                    }
+                    else
+                    {
+                        frozenBitmap = imageSource;
+                    }
+                    
+                    await Task.Run(() =>
+                    {
+                        using var fileStream = new FileStream(imagePath, FileMode.Create);
+                        var encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(frozenBitmap));
+                        encoder.Save(fileStream);
+                    });
 
                     // 保存偵測結果到 CSV
                     await Task.Run(() =>
@@ -787,6 +793,33 @@ namespace ObjectDetectionApp
             {
                 _execute();
             }
+        }
+
+        protected void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                // 在這裡添加上傳圖片的邏輯
+                _currentImagePath = files[0];
+                
+                // 載入並顯示原始圖片
+                using var image = new Mat(_currentImagePath);
+                imgMain.Source = image.ToBitmapSource();
+                
+                // 清空之前的結果
+                _detectionResults.Clear();
+                _objectStats.Clear();
+                
+                // 更新保存按鈕狀態
+                UpdateSaveButtonState();
+            }
+        }
+
+        protected void Window_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+            e.Handled = true;
         }
     }
 

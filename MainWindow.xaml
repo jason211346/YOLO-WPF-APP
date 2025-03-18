@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObjectDetectionApp"
         mc:Ignorable="d"
-        Title="YOLO物件偵測" Height="600" Width="1250">
+        Title="YOLO物件偵測" Height="600" Width="1250" AllowDrop="True" Drop="Window_Drop" DragOver="Window_DragOver">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
